@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제주 IP 소개</title>
+  <meta name="description" content="제주 IP 소개 사이트">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#hero" id="brand">제주 IP</a>
+    <nav aria-label="바로가기">
+      <a href="#summary">소개</a>
+      <a href="#sections">이야기</a>
+      <a href="#keywords">키워드</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 메인(히어로) -->
+    <section id="hero" class="hero" aria-labelledby="h-title">
+      <img id="hero-img" class="hero-img" alt="">
+      <div class="hero-shade"></div>
+      <div class="hero-text">
+        <span class="badge" id="h-region"></span>
+        <h1 id="h-title">불러오는 중…</h1>
+        <p id="h-sub"></p>
+        <a class="btn" href="#sections">이야기 보러 가기 ↓</a>
+      </div>
+    </section>
+
+    <!-- 소개 -->
+    <section id="summary" class="block narrow">
+      <h2>한눈에 보기</h2>
+      <p class="lead" id="summary-text"></p>
+    </section>
+
+    <!-- 섹션 목록 -->
+    <section id="sections" class="block">
+      <h2>이야기 따라가기</h2>
+      <ol class="cards" id="cards"></ol>
+    </section>
+
+    <!-- 키워드 -->
+    <section id="keywords" class="block narrow">
+      <h2>키워드</h2>
+      <ul class="chips" id="chips"></ul>
+    </section>
+
+    <p class="error" id="error" hidden></p>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="foot">
+    <p id="f-main"></p>
+    <p class="small">이미지는 JSON에 내장된 SVG 일러스트입니다.</p>
+  </footer>
+
+  <!-- data.js 의 변수 data 를 불러와 쓴다 (서버 없이 더블클릭으로 실행됨) -->
+  <script src="./data.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    function render(d) {
+      document.title = `${d.topic} · 제주 IP 소개`;
+      $('brand').textContent = d.topic;
+
+      // 히어로
+      $('hero-img').src = d.hero_image;
+      $('hero-img').alt = `${d.topic} 대표 이미지`;
+      $('h-region').textContent = d.region;
+      $('h-title').textContent = d.topic;
+      $('h-sub').textContent = d.subtitle;
+
+      // 소개
+      $('summary-text').textContent = d.summary;
+
+      // 섹션 카드
+      const cards = $('cards');
+      for (const s of d.sections) {
+        const li = document.createElement('li');
+        li.className = 'card';
+
+        const fig = document.createElement('img');
+        fig.src = s.image;
+        fig.alt = s.title;
+        fig.loading = 'lazy';
+
+        const body = document.createElement('div');
+        body.className = 'card-body';
+        const no = document.createElement('span');
+        no.className = 'no';
+        no.textContent = String(s.no).padStart(2, '0');
+        const h = document.createElement('h3');
+        h.textContent = s.title;
+        const p = document.createElement('p');
+        p.textContent = s.text;
+        body.append(no, h, p);
+
+        li.append(fig, body);
+        cards.appendChild(li);
+      }
+
+      // 키워드
+      const chips = $('chips');
+      for (const k of d.keywords) {
+        const li = document.createElement('li');
+        li.textContent = '#' + k;
+        chips.appendChild(li);
+      }
+
+      // 푸터
+      $('f-main').textContent = `${d.student} · ${d.team} · ${d.region}`;
+    }
+
+    try {
+      render(data);   // data.js 에 들어 있는 변수
+    } catch (e) {
+      const box = $('error');
+      box.hidden = false;
+      box.textContent = '데이터를 불러오지 못했습니다: ' + e.message;
+      $('h-title').textContent = '데이터 오류';
+    }
+  </script>
+</body>
+</html>

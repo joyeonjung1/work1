@@ -1,0 +1,81 @@
+:root {
+  --brand: #ea580c;      /* 대표 이미지의 주황 */
+  --brand-dark: #9a3412;
+  --ink: #2a1b12;
+  --muted: #6f5a4c;
+  --bg: #fff8f1;
+  --card: #fff;
+  --line: #f0dccb;
+  --radius: 16px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); line-height: 1.7;
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+}
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+
+/* 상단 바 */
+.top {
+  position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; padding: 12px 20px; background: rgba(255, 248, 241, .92); backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 700; color: var(--brand-dark); text-decoration: none; }
+.top nav { display: flex; gap: 16px; }
+.top nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+.top nav a:hover { color: var(--brand); }
+
+/* 히어로 */
+.hero { position: relative; min-height: 420px; display: grid; place-items: center; overflow: hidden; color: #fff; text-align: center; }
+.hero-img { position: absolute; inset: -12px; width: calc(100% + 24px); height: calc(100% + 24px); max-width: none; object-fit: cover; filter: blur(7px); }   /* 이미지 속 글씨가 위의 제목과 겹쳐 보이지 않게 흐리게 */
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42, 27, 18, .15), rgba(42, 27, 18, .55)); }
+.hero-text { position: relative; padding: 48px 20px; max-width: 760px; }
+.hero h1 { margin: 12px 0 6px; font-size: clamp(34px, 7vw, 60px); line-height: 1.2; text-shadow: 0 2px 12px rgba(0, 0, 0, .35); }
+.hero p { margin: 0 0 22px; font-size: clamp(16px, 2.6vw, 21px); text-shadow: 0 1px 8px rgba(0, 0, 0, .35); }
+.badge { display: inline-block; padding: 4px 14px; border-radius: 999px; background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .5); font-size: 14px; }
+.btn { display: inline-block; padding: 11px 24px; border-radius: 999px; background: #fff; color: var(--brand-dark); font-weight: 700; text-decoration: none; }
+.btn:hover { background: #ffe9d6; }
+
+/* 공통 블록 */
+.block { max-width: 1040px; margin: 0 auto; padding: 56px 20px 8px; }
+.block.narrow { max-width: 760px; }
+.block h2 { margin: 0 0 18px; font-size: 28px; color: var(--brand-dark); }
+.block h2::after { content: ""; display: block; width: 44px; height: 4px; margin-top: 8px; border-radius: 4px; background: var(--brand); }
+.lead { font-size: 19px; color: var(--muted); margin: 0; }
+
+/* 섹션 카드 */
+.cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(154, 52, 18, .16); }
+.card img { width: 100%; aspect-ratio: 8 / 5; object-fit: cover; }
+.card-body { padding: 16px 18px 20px; }
+.no { display: inline-block; padding: 0 10px; border-radius: 999px; background: var(--brand); color: #fff; font-size: 13px; font-weight: 700; }
+.card h3 { margin: 8px 0 4px; font-size: 20px; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 키워드 */
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.chips li { padding: 8px 18px; border-radius: 999px; background: #ffe9d6; color: var(--brand-dark); font-weight: 700; }
+
+/* 오류 */
+.error { max-width: 760px; margin: 24px auto; padding: 14px 18px; border-radius: 12px; background: #fde8e8; color: #a40e26; }
+
+/* 푸터 */
+.foot { margin-top: 64px; padding: 28px 20px; text-align: center; background: var(--brand-dark); color: #ffe9d6; }
+.foot p { margin: 2px 0; }
+.foot .small { font-size: 13px; opacity: .75; }
+
+/* 모바일 */
+@media (max-width: 560px) {
+  .top { padding: 10px 14px; }
+  .top nav { gap: 12px; }
+  .top nav a { font-size: 14px; }
+  .hero { min-height: 340px; }
+  .block { padding-top: 40px; }
+  .block h2 { font-size: 24px; }
+  .cards { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card { transition: none; } }
